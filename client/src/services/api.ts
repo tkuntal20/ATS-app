@@ -1,6 +1,12 @@
-import type { AnalysisResult } from '../types';
+import type { AnalysisResult, OptimizedResume, OptimizationRequest } from '../types';
 
 const API_BASE_URL = 'http://localhost:3000';
+
+interface ApiResponse {
+  success: boolean;
+  optimizedResume?: OptimizedResume;
+  error?: string;
+}
 
 export async function analyzeResume(
   resumeFile: File,
@@ -25,17 +31,49 @@ export async function analyzeResume(
   console.log('Backend response:', data);
   
   // Map backend response to frontend format
-  // Backend returns suggestions as objects with {priority, category, suggestion, impact}
-  // Frontend expects simple string arrays
-  const improvements = (data.suggestions || data.weaknesses || []).map((item: any) => 
+  const improvements = (data.suggestions || data.weaknesses || []).map((item: { suggestion?: string } | string) => 
     typeof item === 'string' ? item : item.suggestion || item
   );
   
   return {
     score: data.score,
+    breakdown: data.breakdown,
     matchedSkills: data.matchedSkills || [],
     missingSkills: data.missingSkills || [],
     strengths: data.strengths || [],
     improvements,
+    resumeText: data.resumeText,
+    jobDescription: data.jobDescription
   };
+}
+
+export async function optimizeResume(
+  request: OptimizationRequest
+): Promise<OptimizedResume> {
+  const response = await fetch(`${API_BASE_URL}/api/optimize`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ...request,
+      mode: request.mode || 'balanced'
+    }),
+  });
+
+  if (!response.ok) {
+    const error: ApiResponse = await response.json().catch(() => ({ 
+      success: false, 
+      error: 'Failed to optimize resume' 
+    }));
+    throw new Error(error.error || 'Failed to optimize resume');
+  }
+
+  const data: ApiResponse = await response.json();
+  
+  if (!data.optimizedResume) {
+    throw new Error('No optimized resume returned from server');
+  }
+
+  return data.optimizedResume;
 }

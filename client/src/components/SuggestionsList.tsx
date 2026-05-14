@@ -1,29 +1,29 @@
 interface SuggestionsListProps {
-  items: string[];
-  type: 'strength' | 'improvement';
+  suggestions: string[];
+  type: 'strengths' | 'improvements';
 }
 
-export default function SuggestionsList({ items, type }: SuggestionsListProps) {
-  if (items.length === 0) {
+export default function SuggestionsList({ suggestions, type }: SuggestionsListProps) {
+  if (suggestions.length === 0) {
     return (
       <p className="text-sm text-gray-500 italic">
-        {type === 'strength' ? 'No strengths identified' : 'No improvements suggested'}
+        {type === 'strengths' ? 'No strengths identified' : 'No improvements suggested'}
       </p>
     );
   }
 
   return (
     <ul className="space-y-3">
-      {items.map((item, index) => (
+      {suggestions.map((item, index) => (
         <li key={index} className="flex items-start">
           <span
             className={`flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center mr-3 mt-0.5 ${
-              type === 'strength'
+              type === 'strengths'
                 ? 'bg-blue-100 text-blue-600'
                 : 'bg-purple-100 text-purple-600'
             }`}
           >
-            {type === 'strength' ? (
+            {type === 'strengths' ? (
               <svg
                 className="w-4 h-4"
                 fill="none"

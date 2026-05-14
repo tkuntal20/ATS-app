@@ -1,33 +1,8 @@
-export interface ScoreBreakdown {
-  keywordMatch: number;
-  skillAlignment: number;
-  experienceMatch: number;
-  formatting: number;
-  readability: number;
-  total: number;
-}
-
-export interface AnalysisResult {
-  score: number;
-  breakdown?: ScoreBreakdown;
-  matchedSkills: string[];
-  missingSkills: string[];
-  strengths: string[];
-  improvements: string[];
-  resumeText?: string;
-  jobDescription?: string;
-}
-
-export interface ApiError {
-  error: string;
-  details?: string;
-}
-
-// Enhanced types for realistic resume structure
+// Shared types for server-side code
 export interface ResumeSection {
   type: 'summary' | 'skills' | 'experience' | 'education' | 'certifications' | 'projects';
   content: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface ExperienceEntry {

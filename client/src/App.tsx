@@ -168,7 +168,11 @@ function App() {
             </div>
           </div>
         ) : (
-          <ResultsDisplay results={results} />
+          <ResultsDisplay 
+            results={results} 
+            resumeFile={resumeFile!}
+            jobDescription={jobDescription}
+          />
         )}
       </main>
 

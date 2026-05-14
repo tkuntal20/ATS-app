@@ -1,0 +1,48 @@
+Senior Full-Stack Engineer
+TechCorp Solutions - Remote
+
+JOB DESCRIPTION
+We are seeking a Senior Full-Stack Engineer to join our growing engineering team. You will work on building scalable, high-performance applications that impact millions of users.
+
+RESPONSIBILITIES
+- Design and develop full-stack applications using modern web technologies
+- Build and maintain microservices architecture for distributed systems
+- Implement RESTful APIs and work with GraphQL for data fetching
+- Optimize application performance and implement best practices
+- Write clean, maintainable, and well-tested code
+- Collaborate with cross-functional teams to define technical requirements
+- Mentor junior engineers and conduct code reviews
+- Contribute to architecture decisions and technical documentation
+- Participate in on-call rotation for production support
+
+REQUIRED QUALIFICATIONS
+- 5+ years of professional software development experience
+- Strong proficiency in JavaScript/TypeScript
+- 3+ years of experience with React or similar modern frontend frameworks
+- 3+ years of backend development experience with Node.js or similar
+- Experience with SQL and NoSQL databases (PostgreSQL, MongoDB)
+- Solid understanding of RESTful API design principles
+- Experience with Git version control
+- Knowledge of Docker and containerization concepts
+- Strong communication and problem-solving skills
+- Bachelor's degree in Computer Science or related field (or equivalent experience)
+
+NICE TO HAVE
+- AWS or cloud platform certification
+- Experience with Kubernetes or container orchestration
+- GraphQL implementation experience
+- Microservices architecture knowledge
+- CI/CD pipeline implementation (GitHub Actions, Jenkins)
+- Experience with automated testing frameworks (Jest, Cypress)
+- Open source contributions
+- Experience with Redis or message queues
+
+TECHNICAL SKILLS REQUIRED
+JavaScript, TypeScript, React, Node.js, Express.js, SQL, NoSQL, REST APIs, Git, Docker
+
+BENEFITS
+- Competitive salary and equity
+- Health insurance and retirement plan
+- Remote work flexibility
+- Professional development budget
+- Collaborative team environment

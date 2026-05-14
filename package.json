@@ -1,0 +1,42 @@
+{
+  "name": "ats-resume-analyzer",
+  "version": "1.0.0",
+  "description": "CLI tool to analyze resumes against job descriptions and provide ATS score with suggestions",
+  "main": "dist/cli.js",
+  "bin": {
+    "ats-app": "dist/cli.js"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc && node dist/cli.js",
+    "start": "node dist/cli.js",
+    "test": "node --test dist/test/*.test.js"
+  },
+  "keywords": [
+    "ats",
+    "resume",
+    "job-description",
+    "analyzer",
+    "cli",
+    "scoring"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.1.0",
+    "pdf-parse": "^1.1.1",
+    "mammoth": "^1.6.0",
+    "octokit": "^3.1.0",
+    "natural": "^6.7.0",
+    "chalk": "^5.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.10.6",
+    "@types/pdf-parse": "^1.1.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

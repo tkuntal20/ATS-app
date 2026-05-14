@@ -49,7 +49,8 @@ export function generateSuggestions(resume, jd, scoring) {
         });
     }
     // Section suggestions
-    if (!resume.sections['experience'] || resume.sections['experience'].length < 50) {
+    if (!resume.sections['experience'] ||
+        resume.sections['experience'].length < 50) {
         suggestions.push({
             priority: 'high',
             category: 'Structure',
@@ -57,7 +58,8 @@ export function generateSuggestions(resume, jd, scoring) {
             impact: 'Can improve ATS score by 2-4 points',
         });
     }
-    if (!resume.sections['skills'] || resume.sections['skills'].length < 30) {
+    if (!resume.sections['skills'] ||
+        resume.sections['skills'].length < 30) {
         suggestions.push({
             priority: 'medium',
             category: 'Structure',
@@ -66,7 +68,9 @@ export function generateSuggestions(resume, jd, scoring) {
         });
     }
     // Specific role matching
-    if (jd.jobTitle && !resume.rawText.includes(jd.jobTitle)) {
+    if (jd.jobTitle &&
+        jd.jobTitle !== 'Unknown Position' &&
+        !resume.rawText.toLowerCase().includes(jd.jobTitle.toLowerCase())) {
         suggestions.push({
             priority: 'medium',
             category: 'Relevance',
@@ -84,17 +88,80 @@ export function generateSuggestions(resume, jd, scoring) {
         });
     }
     return suggestions.sort((a, b) => {
-        const priorityMap = { high: 0, medium: 1, low: 2 };
+        const priorityMap = {
+            high: 0,
+            medium: 1,
+            low: 2
+        };
         return priorityMap[a.priority] - priorityMap[b.priority];
     });
 }
 function findMissingKeywords(resumeText, jdText) {
-    const jdWords = jdText.split(/\s+/).filter(w => w.length > 5);
-    const resumeText2 = resumeText;
-    const missing = jdWords
-        .filter(word => !resumeText2.includes(word))
-        .filter((word, idx, arr) => arr.indexOf(word) === idx)
-        .slice(0, 10);
-    return missing;
+    const stopWords = [
+        'remote',
+        'description',
+        'seeking',
+        'required',
+        'requirements',
+        'responsibilities',
+        'benefits',
+        'experience',
+        'position',
+        'candidate',
+        'role',
+        'team',
+        'work',
+        'working',
+        'using',
+        'ability',
+        'strong',
+        'knowledge',
+        'understanding',
+        'professional',
+        'environment',
+        'development',
+        'applications',
+        'software',
+        'systems',
+        'engineering'
+    ];
+    const technicalKeywords = [
+        'javascript',
+        'typescript',
+        'react',
+        'node.js',
+        'node',
+        'express',
+        'graphql',
+        'docker',
+        'kubernetes',
+        'redis',
+        'jenkins',
+        'aws',
+        'azure',
+        'gcp',
+        'mongodb',
+        'postgresql',
+        'mysql',
+        'sql',
+        'nosql',
+        'rest',
+        'microservices',
+        'terraform',
+        'git',
+        'github',
+        'gitlab',
+        'ci/cd',
+        'jira',
+        'agile'
+    ];
+    const normalizedResume = resumeText.toLowerCase();
+    const normalizedJD = jdText.toLowerCase();
+    const missing = technicalKeywords.filter(keyword => {
+        return (normalizedJD.includes(keyword) &&
+            !normalizedResume.includes(keyword) &&
+            !stopWords.includes(keyword));
+    });
+    return missing.slice(0, 10);
 }
 //# sourceMappingURL=generator.js.map

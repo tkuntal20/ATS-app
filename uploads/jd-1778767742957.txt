@@ -1,0 +1,30 @@
+Senior Full-Stack Engineer
+
+We are seeking a Senior Full-Stack Engineer to join our growing engineering team.
+
+RESPONSIBILITIES
+
+- Build and maintain scalable web applications
+- Develop frontend systems using React and TypeScript
+- Build backend APIs using Node.js and Express
+- Work with PostgreSQL and MongoDB
+- Deploy services using Docker and AWS
+- Collaborate with Agile product teams
+- Implement CI/CD pipelines using Jenkins and GitHub
+- Work with Redis caching systems
+- Build microservices architecture
+
+REQUIREMENTS
+
+- 5+ years of software engineering experience
+- Strong JavaScript and TypeScript experience
+- Experience with REST APIs and GraphQL
+- Experience with cloud infrastructure
+- Strong Git and GitHub knowledge
+- Experience with Agile development
+
+NICE TO HAVE
+
+- Kubernetes experience
+- Terraform experience
+- NoSQL database experience

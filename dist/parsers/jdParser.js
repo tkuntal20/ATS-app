@@ -23,50 +23,91 @@ export async function parseJD(filePath) {
 }
 function extractRequiredSkills(text) {
     const allSkills = extractAllSkills(text);
-    // Skills before "nice to have" are considered required
     const niceToHaveIdx = text.indexOf('nice to have');
-    const requiredText = niceToHaveIdx > -1 ? text.substring(0, niceToHaveIdx) : text;
-    return allSkills.filter(skill => requiredText.includes(skill) &&
-        (requiredText.includes(`required ${skill}`) ||
-            requiredText.includes(`must have ${skill}`) ||
-            requiredText.includes(`${skill} required`))).length > 0
-        ? allSkills.filter(skill => requiredText.includes(skill))
-        : allSkills.slice(0, Math.ceil(allSkills.length * 0.7));
+    const requiredText = niceToHaveIdx > -1
+        ? text.substring(0, niceToHaveIdx)
+        : text;
+    return allSkills.filter(skill => requiredText.includes(skill.toLowerCase()));
 }
 function extractNiceToHaveSkills(text) {
     const allSkills = extractAllSkills(text);
     const niceToHaveIdx = text.indexOf('nice to have');
     if (niceToHaveIdx > -1) {
         const niceToHaveText = text.substring(niceToHaveIdx);
-        return allSkills.filter(skill => niceToHaveText.includes(skill));
+        return allSkills.filter(skill => niceToHaveText.includes(skill.toLowerCase()));
     }
-    return allSkills.slice(Math.ceil(allSkills.length * 0.7));
+    return [];
 }
 function extractAllSkills(text) {
     const skillKeywords = [
-        'javascript', 'typescript', 'python', 'java', 'c++', 'c#', 'go', 'rust',
-        'react', 'vue', 'angular', 'svelte', 'node', 'express', 'django', 'flask',
-        'sql', 'mongodb', 'postgresql', 'mysql', 'redis', 'elasticsearch',
-        'aws', 'gcp', 'azure', 'docker', 'kubernetes', 'terraform',
-        'git', 'ci/cd', 'jenkins', 'gitlab', 'github',
-        'html', 'css', 'rest', 'graphql', 'api', 'microservices',
-        'agile', 'scrum', 'jira', 'slack', 'communication', 'leadership'
+        'javascript',
+        'typescript',
+        'python',
+        'java',
+        'c++',
+        'c#',
+        'go',
+        'rust',
+        'react',
+        'vue',
+        'angular',
+        'svelte',
+        'node.js',
+        'node',
+        'express',
+        'django',
+        'flask',
+        'sql',
+        'mongodb',
+        'postgresql',
+        'mysql',
+        'redis',
+        'elasticsearch',
+        'aws',
+        'gcp',
+        'azure',
+        'docker',
+        'kubernetes',
+        'terraform',
+        'git',
+        'ci/cd',
+        'jenkins',
+        'gitlab',
+        'github',
+        'html',
+        'css',
+        'graphql',
+        'rest api',
+        'restful api',
+        'microservices',
+        'agile',
+        'scrum',
+        'jira',
+        'slack',
+        'communication',
+        'leadership'
     ];
     const found = new Set();
+    const normalizedText = text.toLowerCase();
     skillKeywords.forEach(skill => {
-        if (text.includes(skill.toLowerCase())) {
+        const escapedSkill = skill.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`\\b${escapedSkill}\\b`, 'i');
+        if (regex.test(normalizedText)) {
             found.add(skill);
         }
     });
     return Array.from(found);
 }
 function extractYearsOfExperience(text) {
-    const match = text.match(/(\d+)\+?\s*(years?|yrs)/i);
+    const match = text.match(/(\d+)\+?\s*(years?|yrs?|year)\s*(of)?\s*(experience)?/i);
     return match ? parseInt(match[1]) : 0;
 }
 function extractJobTitle(text) {
     const lines = text.split('\n');
-    return lines[0]?.trim() || 'Unknown Position';
+    const possibleTitle = lines.find(line => line.trim().length > 5 &&
+        line.trim().length < 80 &&
+        !line.toLowerCase().includes('job description'));
+    return possibleTitle?.trim() || 'Unknown Position';
 }
 function extractResponsibilities(text) {
     const responsibilities = [];
@@ -74,13 +115,17 @@ function extractResponsibilities(text) {
     let inResponsibilities = false;
     lines.forEach(line => {
         const lower = line.toLowerCase();
-        if (lower.includes('responsibility') || lower.includes('what you will')) {
+        if (lower.includes('responsibility') ||
+            lower.includes('what you will')) {
             inResponsibilities = true;
         }
-        else if (lower.includes('requirement') || lower.includes('qualification')) {
+        else if (lower.includes('requirement') ||
+            lower.includes('qualification')) {
             inResponsibilities = false;
         }
-        else if (inResponsibilities && line.match(/^[\s\-\*•]\s+/) && line.trim().length > 10) {
+        else if (inResponsibilities &&
+            line.match(/^[\s\-\*•]\s+/) &&
+            line.trim().length > 10) {
             responsibilities.push(line.replace(/^[\s\-\*•]\s+/, '').trim());
         }
     });
@@ -92,13 +137,17 @@ function extractQualifications(text) {
     let inQualifications = false;
     lines.forEach(line => {
         const lower = line.toLowerCase();
-        if (lower.includes('qualification') || lower.includes('requirement')) {
+        if (lower.includes('qualification') ||
+            lower.includes('requirement')) {
             inQualifications = true;
         }
-        else if (lower.includes('nice to have') || lower.includes('other')) {
+        else if (lower.includes('nice to have') ||
+            lower.includes('other')) {
             inQualifications = false;
         }
-        else if (inQualifications && line.match(/^[\s\-\*•]\s+/) && line.trim().length > 10) {
+        else if (inQualifications &&
+            line.match(/^[\s\-\*•]\s+/) &&
+            line.trim().length > 10) {
             qualifications.push(line.replace(/^[\s\-\*•]\s+/, '').trim());
         }
     });

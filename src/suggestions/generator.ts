@@ -14,6 +14,7 @@ export function generateSuggestions(
   jd: JDParsed,
   scoring: ScoringResult
 ): Suggestion[] {
+
   const suggestions: Suggestion[] = [];
 
   // Missing skills suggestions
@@ -31,97 +32,214 @@ export function generateSuggestions(
     suggestions.push({
       priority: 'high',
       category: 'Experience',
-      suggestion: 'Highlight relevant projects and experiences that match the job requirements',
+      suggestion:
+        'Highlight relevant projects and experiences that match the job requirements',
       impact: 'Can improve ATS score by 3-5 points',
     });
   }
 
   // Keyword suggestions
   if (scoring.breakdown.keywordMatch < 30) {
-    const missingKeywords = findMissingKeywords(resume.normalizedText, jd.normalizedText);
+
+    const missingKeywords = findMissingKeywords(
+      resume.normalizedText,
+      jd.normalizedText
+    );
+
     missingKeywords.slice(0, 3).forEach(keyword => {
+
       suggestions.push({
         priority: 'medium',
         category: 'Keywords',
-        suggestion: `Incorporate "${keyword}" in your experience descriptions to match JD language`,
+        suggestion:
+          `Incorporate "${keyword}" in your experience descriptions to match JD language`,
         impact: 'Can improve ATS score by 1-2 points per keyword',
       });
+
     });
   }
 
   // Formatting suggestions
   if (scoring.breakdown.formatting < 8) {
+
     suggestions.push({
       priority: 'high',
       category: 'Formatting',
-      suggestion: 'Avoid tables, columns, and graphics. Use simple formatting for ATS compatibility',
+      suggestion:
+        'Avoid tables, columns, and graphics. Use simple formatting for ATS compatibility',
       impact: 'Can improve ATS score by 2-3 points',
     });
+
   }
 
   // Readability suggestions
   if (scoring.breakdown.readability < 7) {
+
     suggestions.push({
       priority: 'medium',
       category: 'Readability',
-      suggestion: 'Use action verbs at the start of bullet points (e.g., "Developed", "Led", "Achieved")',
+      suggestion:
+        'Use action verbs at the start of bullet points (e.g., "Developed", "Led", "Achieved")',
       impact: 'Can improve ATS score by 2-3 points',
     });
+
   }
 
   // Section suggestions
-  if (!resume.sections['experience'] || resume.sections['experience'].length < 50) {
+  if (
+    !resume.sections['experience'] ||
+    resume.sections['experience'].length < 50
+  ) {
+
     suggestions.push({
       priority: 'high',
       category: 'Structure',
-      suggestion: 'Expand your experience section with detailed descriptions of relevant roles',
+      suggestion:
+        'Expand your experience section with detailed descriptions of relevant roles',
       impact: 'Can improve ATS score by 2-4 points',
     });
+
   }
 
-  if (!resume.sections['skills'] || resume.sections['skills'].length < 30) {
+  if (
+    !resume.sections['skills'] ||
+    resume.sections['skills'].length < 30
+  ) {
+
     suggestions.push({
       priority: 'medium',
       category: 'Structure',
-      suggestion: 'Create a dedicated skills section with all relevant technical and soft skills',
+      suggestion:
+        'Create a dedicated skills section with all relevant technical and soft skills',
       impact: 'Can improve ATS score by 2-3 points',
     });
+
   }
 
   // Specific role matching
-  if (jd.jobTitle && !resume.rawText.includes(jd.jobTitle)) {
+  if (
+    jd.jobTitle &&
+    jd.jobTitle !== 'Unknown Position' &&
+    !resume.rawText.toLowerCase().includes(jd.jobTitle.toLowerCase())
+  ) {
+
     suggestions.push({
       priority: 'medium',
       category: 'Relevance',
-      suggestion: `Mention experience with "${jd.jobTitle}" role or similar positions`,
+      suggestion:
+        `Mention experience with "${jd.jobTitle}" role or similar positions`,
       impact: 'Can improve ATS score by 1-2 points',
     });
+
   }
 
   // Quantifiable metrics
-  if (!resume.rawText.match(/\d+%|\d+\s*(?:million|thousand|hundred|users|customers|team|projects)/i)) {
+  if (
+    !resume.rawText.match(
+      /\d+%|\d+\s*(?:million|thousand|hundred|users|customers|team|projects)/i
+    )
+  ) {
+
     suggestions.push({
       priority: 'low',
       category: 'Impact',
-      suggestion: 'Add quantifiable metrics and achievements (e.g., "Improved performance by 30%")',
+      suggestion:
+        'Add quantifiable metrics and achievements (e.g., "Improved performance by 30%")',
       impact: 'Can improve ATS score by 1-2 points',
     });
+
   }
 
   return suggestions.sort((a, b) => {
-    const priorityMap = { high: 0, medium: 1, low: 2 };
+
+    const priorityMap = {
+      high: 0,
+      medium: 1,
+      low: 2
+    };
+
     return priorityMap[a.priority] - priorityMap[b.priority];
+
   });
 }
 
-function findMissingKeywords(resumeText: string, jdText: string): string[] {
-  const jdWords = jdText.split(/\s+/).filter(w => w.length > 5);
-  const resumeText2 = resumeText;
+function findMissingKeywords(
+  resumeText: string,
+  jdText: string
+): string[] {
 
-  const missing = jdWords
-    .filter(word => !resumeText2.includes(word))
-    .filter((word, idx, arr) => arr.indexOf(word) === idx)
-    .slice(0, 10);
+  const stopWords = [
+    'remote',
+    'description',
+    'seeking',
+    'required',
+    'requirements',
+    'responsibilities',
+    'benefits',
+    'experience',
+    'position',
+    'candidate',
+    'role',
+    'team',
+    'work',
+    'working',
+    'using',
+    'ability',
+    'strong',
+    'knowledge',
+    'understanding',
+    'professional',
+    'environment',
+    'development',
+    'applications',
+    'software',
+    'systems',
+    'engineering'
+  ];
 
-  return missing;
+  const technicalKeywords = [
+    'javascript',
+    'typescript',
+    'react',
+    'node.js',
+    'node',
+    'express',
+    'graphql',
+    'docker',
+    'kubernetes',
+    'redis',
+    'jenkins',
+    'aws',
+    'azure',
+    'gcp',
+    'mongodb',
+    'postgresql',
+    'mysql',
+    'sql',
+    'nosql',
+    'rest',
+    'microservices',
+    'terraform',
+    'git',
+    'github',
+    'gitlab',
+    'ci/cd',
+    'jira',
+    'agile'
+  ];
+
+  const normalizedResume = resumeText.toLowerCase();
+  const normalizedJD = jdText.toLowerCase();
+
+  const missing = technicalKeywords.filter(keyword => {
+
+    return (
+      normalizedJD.includes(keyword) &&
+      !normalizedResume.includes(keyword) &&
+      !stopWords.includes(keyword)
+    );
+
+  });
+
+  return missing.slice(0, 10);
 }

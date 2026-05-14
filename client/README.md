@@ -1,79 +1,60 @@
 # ATS Resume Analyzer - Frontend
 
-A modern, responsive React frontend for the ATS Resume Analyzer application. Built with React 19, TypeScript, and Vite.
+Modern React frontend for the ATS Resume Analyzer application.
 
 ## Features
 
-### 🎨 Modern UI/UX
-- **Glassmorphism Design** - Beautiful frosted glass effects with backdrop blur
-- **Gradient Backgrounds** - Smooth color transitions and visual depth
-- **Responsive Layout** - Fully responsive design that works on all devices
-- **Smooth Animations** - Fade-in effects and smooth transitions
-- **Dark Theme** - Eye-friendly dark color scheme
-
-### 📤 File Upload
-- **Drag & Drop** - Intuitive drag and drop file upload
-- **File Validation** - Validates file type and size (max 5MB)
-- **Visual Feedback** - Clear visual states for drag, hover, and file selected
-- **Multiple Formats** - Supports PDF, DOCX, DOC, and TXT files
-
-### 📊 Results Display
-- **ATS Score** - Large, color-coded score display (0-100)
-- **Score Breakdown** - Detailed breakdown of 5 scoring criteria with progress bars
-- **Skills Analysis** - Visual display of matched and missing skills with tags
-- **Strengths & Weaknesses** - Clear categorization of resume analysis
-- **Actionable Suggestions** - Priority-coded suggestions with impact indicators
-
-### 🎯 User Experience
-- **Error Handling** - Clear error messages with helpful icons
-- **Loading States** - Spinner animation during analysis
-- **Character Counter** - Real-time character count for job description
-- **Reset Functionality** - Easy way to analyze another resume
-- **Accessibility** - WCAG compliant with proper ARIA labels
+- 🎯 Drag and drop resume upload (PDF/TXT)
+- 📝 Job description text input
+- 🔍 Real-time ATS score analysis
+- 📊 Visual score display with animated progress circle
+- ✅ Matched skills highlighting
+- ❌ Missing skills identification
+- 💪 Strengths analysis
+- 💡 Improvement suggestions
+- 🎨 Modern UI with Tailwind CSS
+- 📱 Fully responsive design
+- ⚡ Fast and smooth user experience
 
 ## Tech Stack
 
-- **React 19.2.6** - Latest React with improved performance
-- **TypeScript 6.0.2** - Type-safe development
-- **Vite 8.0.12** - Lightning-fast build tool
-- **CSS3** - Modern CSS with custom properties and animations
+- **React 19** - UI framework
+- **TypeScript** - Type safety
+- **Vite** - Build tool
+- **Tailwind CSS** - Styling
+- **Fetch API** - Backend communication
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js >= 18.0.0
-- npm or yarn
+
+- Node.js 18+ installed
+- Backend server running on `http://localhost:3000`
 
 ### Installation
 
 ```bash
-# Navigate to client directory
 cd client
-
-# Install dependencies
 npm install
 ```
 
 ### Development
 
 ```bash
-# Start development server
 npm run dev
 ```
 
 The application will be available at `http://localhost:5173`
 
-### Build
+### Build for Production
 
 ```bash
-# Build for production
 npm run build
 ```
 
 ### Preview Production Build
 
 ```bash
-# Preview production build
 npm run preview
 ```
 
@@ -81,96 +62,75 @@ npm run preview
 
 ```
 client/
-├── public/              # Static assets
 ├── src/
-│   ├── assets/         # Images and icons
-│   ├── App.tsx         # Main application component
-│   ├── App.css         # Application styles
-│   ├── main.tsx        # Application entry point
-│   └── index.css       # Global styles
-├── index.html          # HTML template
-├── package.json        # Dependencies and scripts
-├── tsconfig.json       # TypeScript configuration
-└── vite.config.ts      # Vite configuration
+│   ├── components/          # React components
+│   │   ├── FileUpload.tsx   # Drag & drop file upload
+│   │   ├── JobDescriptionInput.tsx
+│   │   ├── ResultsDisplay.tsx
+│   │   ├── ScoreCircle.tsx  # Animated score visualization
+│   │   ├── SkillsList.tsx   # Skills display
+│   │   └── SuggestionsList.tsx
+│   ├── services/            # API services
+│   │   └── api.ts           # Backend API calls
+│   ├── types/               # TypeScript types
+│   │   └── index.ts
+│   ├── App.tsx              # Main app component
+│   ├── main.tsx             # Entry point
+│   └── index.css            # Global styles
+├── public/                  # Static assets
+├── index.html               # HTML template
+└── package.json
 ```
 
 ## API Integration
 
-The frontend connects to the backend API at `http://localhost:3000/api/analyze`
+The frontend communicates with the backend API at `http://localhost:3000/api/analyze`
 
 ### Request Format
-```typescript
-FormData {
-  resume: File,
-  jd: string
-}
-```
+
+- **Method**: POST
+- **Content-Type**: multipart/form-data
+- **Fields**:
+  - `resume`: File (PDF or TXT)
+  - `jd`: String (Job description text)
 
 ### Response Format
-```typescript
+
+```json
 {
-  success: boolean;
-  score: number;
-  breakdown: {
-    keywordMatch: number;
-    skillAlignment: number;
-    experienceMatch: number;
-    formatting: number;
-    readability: number;
-  };
-  matchedSkills: string[];
-  missingSkills: string[];
-  strengths: string[];
-  weaknesses: string[];
-  suggestions: Array<{
-    suggestion: string;
-    priority: string;
-    impact: string;
-  }>;
+  "score": 85,
+  "matchedSkills": ["JavaScript", "React", "TypeScript"],
+  "missingSkills": ["Python", "AWS"],
+  "strengths": ["Strong technical skills", "Good experience"],
+  "suggestions": ["Add cloud certifications", "Include metrics"]
 }
 ```
 
-## Styling
+## Customization
 
-### Color Palette
-- **Background**: `#0f172a` to `#1e293b` (gradient)
-- **Cards**: `rgba(30, 41, 59, 0.6)` with backdrop blur
-- **Primary**: `#3b82f6` (blue)
-- **Success**: `#22c55e` (green)
-- **Warning**: `#facc15` (yellow)
-- **Error**: `#ef4444` (red)
-- **Text**: `#f1f5f9` (light gray)
+### Colors
 
-### Responsive Breakpoints
-- **Desktop**: > 1024px
-- **Tablet**: 768px - 1024px
-- **Mobile**: < 768px
-- **Small Mobile**: < 480px
+Edit `client/tailwind.config.js` to customize the color scheme:
 
-## Features in Detail
+```js
+theme: {
+  extend: {
+    colors: {
+      primary: {
+        // Your custom colors
+      }
+    }
+  }
+}
+```
 
-### Score Visualization
-- Color-coded score (green ≥75, yellow ≥50, red <50)
-- Animated progress bar
-- Score label (Excellent, Good, Needs Improvement)
+### API Endpoint
 
-### Breakdown Display
-- 5 criteria with individual scores
-- Weight percentages shown
-- Animated progress bars
-- Color-coded values
+Edit `client/src/services/api.ts` to change the backend URL:
 
-### Skills Display
-- Matched skills in green tags
-- Missing skills in red tags
-- Count badges
-- Empty state messages
-
-### Suggestions
-- Priority badges (High, Medium, Low)
-- Impact indicators
-- Hover effects
-- Color-coded priorities
+```ts
+const API_BASE_URL = 'http://your-backend-url';
+```
 
 ## Browser Support
 
@@ -179,28 +139,6 @@ FormData {
 - Safari (latest)
 - Edge (latest)
 
-## Performance
-
-- **First Contentful Paint**: < 1s
-- **Time to Interactive**: < 2s
-- **Lighthouse Score**: 95+
-
-## Accessibility
-
-- Semantic HTML
-- ARIA labels
-- Keyboard navigation
-- Screen reader friendly
-- Color contrast compliance (WCAG AA)
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
 ## License
 
-MIT License - see LICENSE file for details
+MIT

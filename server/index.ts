@@ -13,11 +13,13 @@ import { optimizeResume } from '../src/ai/optimizer.js';
 
 const app = express();
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 
 app.use(express.json());
+
+app.use(express.static(path.join(process.cwd(), 'client/dist')));
 
 const storage = multer.diskStorage({
 
@@ -250,6 +252,10 @@ app.post('/api/optimize', async (req, res) => {
       error: error instanceof Error ? error.message : 'Failed to optimize resume'
     });
   }
+});
+
+app.get('*', (_, res) => {
+  res.sendFile(path.join(process.cwd(), 'client/dist/index.html'));
 });
 
 app.listen(PORT, () => {

@@ -1,4 +1,4 @@
-FROM node:20-alpine AS base
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -6,35 +6,34 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install dependencies
-RUN npm ci --only=production
-
-# Development stage
-FROM base AS development
-
-# Install all dependencies including devDependencies
-RUN npm install
+RUN npm ci
 
 # Copy source code
 COPY tsconfig.json ./
 COPY server/ ./server/
 COPY src/ ./src/
-COPY uploads/ ./uploads/
+COPY client/ ./client/
 
-# Create uploads directory
-RUN mkdir -p uploads
-
-EXPOSE 3000
-
-CMD ["npm", "run", "dev"]
+# Build client
+WORKDIR /app/client
+RUN npm install && npm run build
 
 # Production stage
-FROM base AS production
+FROM node:20-alpine AS production
 
-# Copy source code
+WORKDIR /app
+
+# Copy package files
+COPY package.json package-lock.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production
+
+# Copy built application and client dist
 COPY tsconfig.json ./
 COPY server/ ./server/
 COPY src/ ./src/
-COPY uploads/ ./uploads/
+COPY --from=builder /app/client/dist ./client/dist
 
 # Create uploads directory
 RUN mkdir -p uploads

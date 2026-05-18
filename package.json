@@ -9,6 +9,7 @@
     "dev": "tsx watch server/index.ts",
     "client": "cd client && npm run dev",
     "build": "cd client && npm run build",
+    "build:prod": "cd client && npm run build && cd .. && tsx server/index.ts",
     "dev:all": "concurrently \"npm run dev\" \"npm run client\""
   },
   "keywords": [

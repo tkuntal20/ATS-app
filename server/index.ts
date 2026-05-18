@@ -254,7 +254,7 @@ app.post('/api/optimize', async (req, res) => {
   }
 });
 
-app.get('*', (_, res) => {
+app.get('/*', (_, res) => {
   res.sendFile(path.join(process.cwd(), 'client/dist/index.html'));
 });
 

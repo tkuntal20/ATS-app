@@ -16,10 +16,10 @@ COPY client/ ./client/
 
 # Build client
 WORKDIR /app/client
-RUN npm install && npm run build
+RUN npm ci && npm run build
 
 # Production stage
-FROM node:20-alpine AS production
+FROM node:20-alpine
 
 WORKDIR /app
 

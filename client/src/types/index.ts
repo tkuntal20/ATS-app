@@ -27,7 +27,7 @@ export interface ApiError {
 export interface ResumeSection {
   type: 'summary' | 'skills' | 'experience' | 'education' | 'certifications' | 'projects';
   content: string;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 }
 
 export interface ExperienceEntry {

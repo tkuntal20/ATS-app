@@ -1,0 +1,38 @@
+{
+  "name": "ATS Resume Analyzer",
+
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+
+  "workspaceFolder": "/app",
+
+  "forwardPorts": [3000, 5173],
+
+  "postCreateCommand": "npm install && cd client && npm install",
+
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/app,type=bind",
+    "source=ats-backend-node_modules,target=/app/node_modules,type=volume",
+    "source=ats-frontend-node_modules,target=/app/client/node_modules,type=volume"
+  ],
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "ms-vscode.vscode-typescript-next",
+        "ms-vscode-remote.remote-containers"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+
+  "remoteUser": "node"
+}

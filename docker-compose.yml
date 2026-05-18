@@ -1,0 +1,68 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+
+    container_name: ats-backend
+
+    ports:
+      - "3000:3000"
+
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      OPENAI_BASE_URL: http://host.docker.internal:11434/v1
+      OPENAI_API_KEY: ollama
+      OPENAI_MODEL: qwen2.5-coder:1.5b
+
+    volumes:
+      - ./server:/app/server
+      - ./src:/app/src
+      - ./uploads:/app/uploads
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./package.json:/app/package.json
+      - /app/node_modules
+
+    restart: unless-stopped
+
+    networks:
+      - ats-network
+
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    command: sh -c "npm install && npx tsx watch server/index.ts"
+
+  frontend:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+
+    container_name: ats-frontend
+
+    ports:
+      - "5173:5173"
+
+    environment:
+      NODE_ENV: development
+      VITE_API_URL: http://localhost:3000
+
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+
+    restart: unless-stopped
+
+    depends_on:
+      - backend
+
+    networks:
+      - ats-network
+
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+
+networks:
+  ats-network:
+    driver: bridge

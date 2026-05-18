@@ -1,0 +1,40 @@
+John Doe
+Senior Software Engineer
+john.doe@email.com | (555) 123-4567 | linkedin.com/in/johndoe
+
+PROFESSIONAL SUMMARY
+Experienced full-stack software engineer with 7 years of expertise in building scalable applications. Proficient in JavaScript, TypeScript, React, and Node.js. Strong background in cloud infrastructure and DevOps practices.
+
+CORE SKILLS
+Technical Skills: JavaScript, TypeScript, React, Node.js, Express.js, MongoDB, PostgreSQL, AWS, Docker, Kubernetes, Git, REST APIs, GraphQL
+Soft Skills: Team Leadership, Problem Solving, Communication, Project Management, Agile Methodology
+
+PROFESSIONAL EXPERIENCE
+
+Senior Software Engineer | TechCorp Solutions | Jan 2022 - Present
+- Led development of microservices architecture using Node.js and Docker, reducing deployment time by 40%
+- Architected and implemented real-time data pipeline processing 1M+ events daily
+- Mentored junior developers and conducted code reviews for team of 8 engineers
+- Implemented CI/CD pipelines using GitHub Actions and AWS CodePipeline
+
+Software Engineer | InnovateLabs | Jun 2019 - Dec 2021
+- Developed full-stack web applications using React and Node.js for 50+ enterprise clients
+- Optimized database queries and API endpoints, improving response time by 60%
+- Implemented automated testing suite with Jest, achieving 85% code coverage
+- Collaborated with product team to define technical requirements and roadmap
+
+Junior Developer | StartupXYZ | Jan 2018 - May 2019
+- Built and maintained frontend components using React and Redux
+- Fixed bugs and implemented new features based on user feedback
+- Participated in sprint planning and daily standups
+
+EDUCATION
+Bachelor of Science in Computer Science | State University | May 2017
+
+CERTIFICATIONS
+AWS Solutions Architect Associate | 2021
+Certified Kubernetes Administrator | 2020
+
+PROJECTS
+Open Source Contributions: Active contributor to popular npm packages with 500+ weekly downloads
+Personal Projects: Built full-stack applications showcasing expertise in modern web technologies

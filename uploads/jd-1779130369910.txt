@@ -1,0 +1,60 @@
+About the job
+Company Overview
+
+
+
+N-iX is a global software development service company that helps businesses across the globe create next-generation software products. Founded in 2002, we unite 2,400+ tech-savvy professionals across 40+ countries, working on impactful projects for industry leaders and Fortune 500 companies. Our expertise spans cloud, data, AI/ML, embedded software, IoT, and more, driving digital transformation across finance, manufacturing, telecom, healthcare, and other industries. Join N-iX and become part of a team where your ideas make a real impact.
+
+Role Objective
+
+
+
+We are seeking a technically skilled senior Support Engineer. You will be responsible for delivering world-class technical support for our products, helping customers overcome technical challenges while ensuring smooth communication between users, support agents, and development teams.
+
+This role requires a mix of strong technical troubleshooting skills, customer-oriented communication, and a proactive approach to improving processes and tools.
+
+Key Responsibilities
+
+Analyze, troubleshoot, and resolve application, system, or integration issues.
+Provide outstanding support for Business Hub and Analytics Platform.
+Troubleshoot issues over calls with customers when needed.
+KNIME workflows to support issue resolution (training will be provided).
+Collaborate closely with fellow support engineers and development team members.
+Contribute to continuous improvement of support processes, tools, and knowledge sharing.
+Share technical insights with the development team to improve future releases.
+Participate in on-call rotations
+
+Requirements
+
+Strong experience in technical or application support, helpdesk, ticket management or support engineering.
+Familiarity with ticketing systems (Jira, Zendesk, ServiceNow, or similar).
+Experience administering software solutions on Linux and/or Windows platforms.
+Basic knowledge of SQL database for data checks and issue investigation. 
+Ability to read and analyze logs.
+Familiarity with identity providers (e.g., Keycloak), LDAP, SAML, OIDC, and OAuth.
+Strong experience or ready to work in software support, ticket management, and escalation processes.
+Knowledge of JVM,Kubernetes deployments, Docker, and RESTful APIs.
+Knowledge of major cloud infrastructures (AWS, Azure, GCP).
+Excellent communication skills in English (written and spoken).
+Ability to clearly explain technical concepts to diverse audiences.
+Strong self-organization, curiosity, and eagerness to learn.
+
+Nice to have:
+
+Knowledge of monitoring tools (Grafana, Kibana, Datadog, etc.).
+Basic scripting skills (Python, Bash).
+Experience supporting SaaS products.
+Understanding of CI/CD pipelines and DevOps processes.
+
+We offer*:
+
+Flexible working format - remote, office-based or flexible
+A competitive salary and good compensation package
+Personalized career growth
+Professional development tools (mentorship program, tech talks and trainings, centers of excellence, and more)
+Active tech communities with regular knowledge sharing
+Education reimbursement
+Memorable anniversary presents
+Corporate events and team buildings
+Other location-specific benefits
+not applicable for freelancers

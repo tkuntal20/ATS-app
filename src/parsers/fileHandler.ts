@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import * as pdfParse from 'pdf-parse';
 import mammoth from 'mammoth';
+import PDFParser from 'pdf2json';
 
 export async function extractTextFromFile(filePath: string): Promise<string> {
   if (!fs.existsSync(filePath)) {
@@ -17,20 +17,35 @@ export async function extractTextFromFile(filePath: string): Promise<string> {
   } else if (ext === '.txt') {
     return fs.readFileSync(filePath, 'utf-8');
   } else {
-    throw new Error(`Unsupported file format: ${ext}. Supported: .pdf, .docx, .txt`);
+    throw new Error(
+      `Unsupported file format: ${ext}. Supported: .pdf, .docx, .txt`
+    );
   }
 }
 
 async function extractFromPDF(filePath: string): Promise<string> {
-  const buffer = fs.readFileSync(filePath);
-  const data = await pdfParse(buffer);
-  return data.text;
+  return new Promise((resolve, reject) => {
+    const pdfParser = new PDFParser();
+
+    pdfParser.on('pdfParser_dataError', (errData: any) => {
+      reject(errData.parserError);
+    });
+
+    pdfParser.on('pdfParser_dataReady', () => {
+      const text = pdfParser.getRawTextContent();
+      resolve(text || '');
+    });
+
+    pdfParser.loadPDF(filePath);
+  });
 }
 
 async function extractFromDOCX(filePath: string): Promise<string> {
   const buffer = fs.readFileSync(filePath);
+
   const result = await mammoth.extractRawText({ buffer });
-  return result.value;
+
+  return result.value || '';
 }
 
 export function cleanText(text: string): string {
